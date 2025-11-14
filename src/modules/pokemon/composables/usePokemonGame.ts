@@ -12,6 +12,9 @@ export const usePokemonGame = () => {
     return pokemonsOptions.value[randomindex];
   });
 
+  const wins = ref(0);
+  const losses = ref(0);
+
   const isLoading = computed(() => pokemons.value.length === 0);
 
   const getPokemons = async (): Promise<Pokemon[]> => {
@@ -48,9 +51,11 @@ export const usePokemonGame = () => {
 
         origin: { y: 0.6 },
       });
+      wins.value += 1;
       return;
     } else {
       gameStatus.value = GameStatus.Lost;
+      losses.value += 1;
       return;
     }
   };
@@ -67,6 +72,9 @@ export const usePokemonGame = () => {
     isLoading,
     randomPokemon,
     pokemonsOptions,
+    wins,
+    losses,
+
     // Methods
     onSelectedOption,
     getNextRound,
